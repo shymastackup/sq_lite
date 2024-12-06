@@ -10,12 +10,12 @@ class ContactListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final contactProvider = Provider.of<ContactProvider>(context);
 
-    // Load contacts when the screen opens.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       contactProvider.loadContacts();
     });
 
     return Scaffold(
+      
       appBar: AppBar(
         title: const Text('Contacts'),
         centerTitle: true,
@@ -95,7 +95,7 @@ class ContactListScreen extends StatelessWidget {
               );
             },
             separatorBuilder: (context, index) =>
-                const SizedBox(height: 8), // Adds spacing between cards
+                const SizedBox(height: 8), 
           );
         },
       ),
@@ -131,7 +131,7 @@ class ContactListScreen extends StatelessWidget {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context), // Cancel
+              onPressed: () => Navigator.pop(context), 
               child: const Text('Cancel'),
             ),
             ElevatedButton(
@@ -140,7 +140,7 @@ class ContactListScreen extends StatelessWidget {
               ),
               onPressed: () {
                 provider.deleteContact(contactId);
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context); 
               },
               child: const Text('Delete'),
             ),

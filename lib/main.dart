@@ -8,7 +8,8 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ContactProvider()),
+        ChangeNotifierProvider
+        (create: (_) => ContactProvider()),
       ],
       child: const MyApp(),
     ),
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'SQLite CRUD Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const ContactListScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
