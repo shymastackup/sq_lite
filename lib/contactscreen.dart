@@ -2,34 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sq_lite_application1/contactprovider.dart';
 
-class AddContactScreen extends StatefulWidget {
+class AddContactScreen extends StatelessWidget {
   final Map<String, dynamic>? contact;
 
   const AddContactScreen({this.contact, super.key});
 
   @override
-  State<AddContactScreen> createState() => _AddContactScreenState();
-}
-
-class _AddContactScreenState extends State<AddContactScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _phoneController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.contact != null) {
-      _nameController.text = widget.contact!['name'];
-      _phoneController.text = widget.contact!['phone'];
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final contactProvider =
-        Provider.of<ContactProvider>(context, listen: false);
-    final isEditing = widget.contact != null;
+    final formKey = GlobalKey<FormState>();
+    final nameController = TextEditingController();
+    final phoneController = TextEditingController();
+    final contactProvider = Provider.of<ContactProvider>(context, listen: false);
+
+    
+    if (contact != null) {
+      nameController.text = contact!['name'];
+      phoneController.text = contact!['phone'];
+    }
+
+    final isEditing = contact != null;
 
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +31,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -50,7 +41,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: _nameController,
+                  controller: nameController,
                   decoration: InputDecoration(
                     labelText: 'Name',
                     border: OutlineInputBorder(
@@ -68,7 +59,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: _phoneController,
+                  controller: phoneController,
                   decoration: InputDecoration(
                     labelText: 'Phone',
                     border: OutlineInputBorder(
@@ -97,19 +88,18 @@ class _AddContactScreenState extends State<AddContactScreen> {
                       ),
                     ),
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
+                      if (formKey.currentState!.validate()) {
                         if (isEditing) {
                           contactProvider.updateContact(
-                            widget.contact!['id'],
-                            _nameController.text.trim(),
-                            _phoneController.text.trim(),
+                            contact!['id'],
+                            nameController.text.trim(),
+                            phoneController.text.trim(),
                           );
-                          _showSnackBar(
-                              context, 'Contact updated successfully!');
+                          _showSnackBar(context, 'Contact updated successfully!');
                         } else {
                           contactProvider.addContact(
-                            _nameController.text.trim(),
-                            _phoneController.text.trim(),
+                            nameController.text.trim(),
+                            phoneController.text.trim(),
                           );
                           _showSnackBar(context, 'Contact added successfully!');
                         }
