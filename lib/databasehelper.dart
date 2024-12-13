@@ -19,17 +19,16 @@ class DatabaseHelper {
 
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'contacts.db');
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
-    );
+    return await openDatabase
+    (path, 
+    version: 1, 
+    onCreate: _onCreate);
   }
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE contacts (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY ,
         name TEXT NOT NULL,
         phone TEXT NOT NULL
       )
@@ -64,4 +63,6 @@ class DatabaseHelper {
     final db = await database;
     return await db.delete('contacts', where: 'id = ?', whereArgs: [id]);
   }
+
+
 }
